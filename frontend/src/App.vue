@@ -11,8 +11,6 @@
 <script setup lang="ts">
 import Navbar from "./Navbar.vue";
 import MainComponent from "./MainComponent.vue";
-
-
 </script>
 
 <script lang="ts">
