@@ -8,43 +8,14 @@
   </v-card>
 </template>
 
-<script setup>
-import { ref, watch } from "vue";
+<script setup lang="ts">
 import Navbar from "./Navbar.vue";
 import MainComponent from "./MainComponent.vue";
 
-const items = [
-  {
-    title: "Foo",
-    value: "foo",
-    prependIcon: 'mdi-home'
-  },
-  {
-    title: "Bar",
-    value: "bar",
-    prependIcon: 'mdi-home'
-  },
-  {
-    title: "Fizz",
-    value: "fizz",
-    prependIcon: 'mdi-home'
-  },
-  {
-    title: "Buzz",
-    value: "buzz",
-    prependIcon: 'mdi-home'
-  },
-];
 
-const drawer = ref(false);
-const group = ref(null);
-
-watch(group, () => {
-  drawer.value = false;
-});
 </script>
 
-<script>
+<script lang="ts">
 export default {
   data: () => ({
     drawer: false,
