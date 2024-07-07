@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "frontend2",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,11 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "apexcharts": "^3.50.0",
     "bootstrap": "^5.3.3",
-    "vue": "^3.4.29"
+    "vue": "^3.4.29",
+    "vue-router": "4",
+    "vue3-apexcharts": "^1.5.3",
+    "vuetify": "^3.6.11"
   },
   "devDependencies": {
-    "@mdi/font": "^7.4.47",
     "@vitejs/plugin-vue": "^5.0.5",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",

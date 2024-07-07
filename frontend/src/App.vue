@@ -1,72 +1,78 @@
 <template>
   <v-card>
     <v-layout>
-      <v-app-bar color="primary" prominent>
-        <v-app-bar-nav-icon
-          variant="text"
-          @click.stop="drawer = !drawer"
-        ></v-app-bar-nav-icon>
+      <Navbar />
 
-        <v-toolbar-title>My files</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <template v-if="$vuetify.display.mdAndUp">
-          <v-btn icon="mdi-magnify" variant="text"></v-btn>
-
-          <v-btn icon="mdi-filter" variant="text"></v-btn>
-        </template>
-
-        <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
-      </v-app-bar>
-
-      <v-navigation-drawer
-        v-model="drawer"
-        :location="$vuetify.display.mobile ? 'bottom' : undefined"
-        temporary
-      >
-        <v-list :items="items"></v-list>
-      </v-navigation-drawer>
-
-      <v-main style="height: 500px">
-        <v-card-text>
-          The navigation drawer will appear from the bottom on smaller size
-          screens.
-        </v-card-text>
-      </v-main>
+      <MainComponent />
     </v-layout>
   </v-card>
 </template>
 
-<script>
-  export default {
-    data: () => ({
-      drawer: false,
-      group: null,
-      items: [
-        {
-          title: 'Foo',
-          value: 'foo',
-        },
-        {
-          title: 'Bar',
-          value: 'bar',
-        },
-        {
-          title: 'Fizz',
-          value: 'fizz',
-        },
-        {
-          title: 'Buzz',
-          value: 'buzz',
-        },
-      ],
-    }),
+<script setup>
+import { ref, watch } from "vue";
+import Navbar from "./Navbar.vue";
+import MainComponent from "./MainComponent.vue";
 
-    watch: {
-      group() {
-        this.drawer = false
+const items = [
+  {
+    title: "Foo",
+    value: "foo",
+    prependIcon: 'mdi-home'
+  },
+  {
+    title: "Bar",
+    value: "bar",
+    prependIcon: 'mdi-home'
+  },
+  {
+    title: "Fizz",
+    value: "fizz",
+    prependIcon: 'mdi-home'
+  },
+  {
+    title: "Buzz",
+    value: "buzz",
+    prependIcon: 'mdi-home'
+  },
+];
+
+const drawer = ref(false);
+const group = ref(null);
+
+watch(group, () => {
+  drawer.value = false;
+});
+</script>
+
+<script>
+export default {
+  data: () => ({
+    drawer: false,
+    group: null,
+    items: [
+      {
+        title: "Foo",
+        value: "foo",
       },
+      {
+        title: "Bar",
+        value: "bar",
+      },
+      {
+        title: "Fizz",
+        value: "fizz",
+      },
+      {
+        title: "Buzz",
+        value: "buzz",
+      },
+    ],
+  }),
+
+  watch: {
+    group() {
+      this.drawer = false;
     },
-  }
+  },
+};
 </script>
