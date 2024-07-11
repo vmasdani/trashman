@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 import GenericApexRadial from "./components/GenericApexRadial.vue";
+
+import "leaflet/dist/leaflet.css";
+import { ref } from "vue";
+const zoom = ref(5);
 </script>
 <template>
   <div class="p-3" style="background-color: lightgray; min-height: 100vh">
@@ -45,6 +50,23 @@ import GenericApexRadial from "./components/GenericApexRadial.vue";
           <h4>{{ Intl.NumberFormat("en-US").format(1728000) }}</h4>
         </div>
         <div><strong>People Impacted</strong></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="height: 45vh; width: 100%">
+        <LMap
+          :use-global-leaflet="false"
+          ref="map"
+          v-model:zoom="zoom"
+          :center="[47.41322, -1.219482]"
+        >
+          <LTileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            layer-type="base"
+            name="OpenStreetMap"
+          ></LTileLayer>
+        </LMap>
       </div>
     </div>
   </div>

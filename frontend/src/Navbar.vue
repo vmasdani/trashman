@@ -1,5 +1,80 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { ctx } from "./main";
+
+const expandedMenu = ref([] as string[]);
+
+const menus = [
+  {
+    icon: "mdi-view-dashboard",
+    name: "Dashboard",
+    children: [
+      {
+        name: "Dashboard",
+      },
+    ],
+  },
+  {
+    icon: "mdi-cog",
+    name: "Master Data",
+    children: [
+      {
+        name: "Fasilitator",
+      },
+      {
+        name: "Pembeli",
+      },
+      {
+        name: "Jenis Mitra",
+      },
+      {
+        name: "List Mitra",
+      },
+      {
+        name: "Group Anggota",
+      },
+      {
+        name: "Pembelian",
+      },
+      {
+        name: "Penjualan",
+      },
+      {
+        name: "Setting Target",
+      },
+    ],
+  },
+  {
+    icon: "mdi-account",
+    name: "Verifikasi",
+    children: [
+      {
+        name: "Verifikasi Mitra",
+      },
+      {
+        name: "Verifikasi Anggota",
+      },
+    ],
+  },
+  {
+    icon: "mdi-file-document",
+    name: "Report",
+    children: [
+      {
+        name: "Kunjungan Non Mitra",
+      },
+      {
+        name: "Kunjungan Mitra",
+      },
+      {
+        name: "Report",
+      },
+      {
+        name: "Export Data",
+      },
+    ],
+  },
+];
 </script>
 <template>
   <!-- <v-app-bar color="primary" prominent>
@@ -45,14 +120,33 @@ import { ctx } from "./main";
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item
-        prepend-icon="mdi-view-dashboard"
-        title="Dashboard"
-        value="home"
-        href="/#/"
-      ></v-list-item>
+      <template v-for="m in menus">
+        <v-list-item
+          :prepend-icon="m.icon"
+          :title="m.name"
+          :value="m.name"
+          @click="
+            (_: any) => {
+              const foundExpanded = expandedMenu.find((mx) => mx === m.name);
 
-      <v-list-item
+              if (!foundExpanded) {
+                expandedMenu = [...expandedMenu, m.name];
+              } else {
+                expandedMenu = expandedMenu.filter((mx) => mx !== m.name);
+              }
+            }
+          "
+        ></v-list-item>
+
+        <template
+          v-if="expandedMenu.find((mx) => mx === m.name)"
+          v-for="c in m.children"
+        >
+          <v-list-item :title="c.name" :value="c.name" href="/#/"></v-list-item>
+        </template>
+      </template>
+
+      <!-- <v-list-item
         prepend-icon="mdi-bell"
         title="Notification"
         value="notification"
@@ -92,7 +186,7 @@ import { ctx } from "./main";
         title="Report"
         value="report"
         href="/#/report"
-      ></v-list-item>
+      ></v-list-item> -->
     </v-list>
   </v-navigation-drawer>
 </template>
