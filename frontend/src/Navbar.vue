@@ -19,6 +19,10 @@ const menus = [
     name: "Master Data",
     children: [
       {
+        name: "User",
+        value: "user",
+      },
+      {
         name: "Fasilitator",
       },
       {
@@ -142,7 +146,11 @@ const menus = [
           v-if="expandedMenu.find((mx) => mx === m.name)"
           v-for="c in m.children"
         >
-          <v-list-item :title="c.name" :value="c.name" href="/#/"></v-list-item>
+          <v-list-item
+            :title="c.name"
+            :value="c.name"
+            :href="`/#/${c.value}`"
+          ></v-list-item>
         </template>
       </template>
 

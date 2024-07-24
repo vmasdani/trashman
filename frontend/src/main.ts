@@ -12,6 +12,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { createRouter, createWebHashHistory } from "vue-router";
 import VueApexCharts from "vue3-apexcharts";
 import ApexCharts from "apexcharts";
+import User from "./pages/User.vue";
+import UserDetail from "./pages/UserDetail.vue";
 
 // Add this when into a TypeScript codebase
 declare module "@vue/runtime-core" {
@@ -49,6 +51,9 @@ export const ctx = ref({
 
 const routes = [
   { path: "/", component: Dashboard },
+  { path: "/user", component: User },
+  { path: "/user/:id", component: UserDetail },
+
   // { path: '/about', component: AboutView },
 ];
 
