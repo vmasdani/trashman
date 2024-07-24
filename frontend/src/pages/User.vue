@@ -63,13 +63,14 @@ handleFetchUsers();
           <td class="border border-dark"></td>
           <td class="border border-dark">
             <div class="d-flex">
-              <button class="btn btn-sm btn-primary">
-                <v-icon icon="mdi-pencil" />
-              </button>
+              <a :href="`/#/user/${u?.id}`">
+                <button class="btn btn-sm btn-primary">
+                  <v-icon icon="mdi-pencil" />
+                </button>
+              </a>
               <button class="btn btn-sm btn-danger">
                 <v-icon icon="mdi-delete" />
               </button>
-              
             </div>
           </td>
         </tr>

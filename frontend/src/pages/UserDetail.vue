@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { fetchUser } from "../fetchers";
 
 const route = useRoute();
 const router = useRouter();
@@ -8,7 +9,7 @@ const user = ref({} as any);
 
 const handleSave = async () => {
   try {
-    const resp = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/users`, {
+    await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/users`, {
       method: "post",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(user.value),
@@ -19,6 +20,22 @@ const handleSave = async () => {
     console.error(e);
   }
 };
+
+const handleFetchUser = async () => {
+  const d = await fetchUser({ id: parseInt(route?.params?.id as string) });
+
+  if (d) {
+    user.value = d;
+  }
+};
+
+const init = () => {
+  if (!isNaN(parseInt(route?.params?.id as string))) {
+    handleFetchUser();
+  }
+};
+
+init();
 </script>
 
 <template>
@@ -47,6 +64,7 @@ const handleSave = async () => {
       <input
         class="form-control form-control-sm"
         placeholder="Name..."
+        :value="user?.name"
         @blur="(e) => {
           user.name = (e.target as HTMLInputElement).value
         }"
@@ -57,6 +75,7 @@ const handleSave = async () => {
       <input
         class="form-control form-control-sm"
         placeholder="Name..."
+        :value="user?.email"
         @blur="(e) => {
           user.email = (e.target as HTMLInputElement).value
         }"
@@ -67,6 +86,7 @@ const handleSave = async () => {
       <input
         class="form-control form-control-sm"
         placeholder="Name..."
+        :value="user?.phone"
         @blur="(e) => {
           user.phone = (e.target as HTMLInputElement).value
         }"
@@ -101,6 +121,7 @@ const handleSave = async () => {
       <textarea
         class="form-control form-control-sm"
         placeholder="Name..."
+        :value="user?.address"
         @blur="(e) => {
           user.address = (e.target as HTMLInputElement).value
         }"
@@ -111,6 +132,7 @@ const handleSave = async () => {
       <input
         class="form-control form-control-sm"
         placeholder="Name..."
+        :value="user?.latitude"
         @blur="(e) => {
           user.latitude = isNaN(parseFloat((e.target as HTMLInputElement).value))
             ? undefined
@@ -123,6 +145,8 @@ const handleSave = async () => {
       <input
         class="form-control form-control-sm"
         placeholder="Name..."
+        :value="user?.longitude"
+
         @blur="(e) => {
           user.longitude = isNaN(parseFloat((e.target as HTMLInputElement).value))
             ? undefined

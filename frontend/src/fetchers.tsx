@@ -24,6 +24,6 @@ export const fetchUser = async (params: { id: any }) => {
 
     return (await resp.json()) as any;
   } catch (e) {
-    return [];
+    return null;
   }
 };
