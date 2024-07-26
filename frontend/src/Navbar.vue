@@ -11,6 +11,7 @@ const menus = [
     children: [
       {
         name: "Dashboard",
+        value: "",
       },
     ],
   },
@@ -19,64 +20,36 @@ const menus = [
     name: "Master Data",
     children: [
       {
-        name: "User",
+        name: "Material",
+        value: "material",
+      },
+
+      {
+        name: "Member",
         value: "user",
       },
       {
-        name: "Fasilitator",
+        name: "Partner",
+        value: "partner",
+      },
+    ],
+  },
+  {
+    icon: "mdi-swap-horizontal",
+    name: "Transaction",
+    children: [
+      {
+        name: "Purchase",
       },
       {
-        name: "Pembeli",
-      },
-      {
-        name: "Jenis Mitra",
-      },
-      {
-        name: "List Mitra",
-      },
-      {
-        name: "Group Anggota",
-      },
-      {
-        name: "Pembelian",
-      },
-      {
-        name: "Penjualan",
-      },
-      {
-        name: "Setting Target",
+        name: "Sales",
       },
     ],
   },
   {
     icon: "mdi-account",
-    name: "Verifikasi",
-    children: [
-      {
-        name: "Verifikasi Mitra",
-      },
-      {
-        name: "Verifikasi Anggota",
-      },
-    ],
-  },
-  {
-    icon: "mdi-file-document",
-    name: "Report",
-    children: [
-      {
-        name: "Kunjungan Non Mitra",
-      },
-      {
-        name: "Kunjungan Mitra",
-      },
-      {
-        name: "Report",
-      },
-      {
-        name: "Export Data",
-      },
-    ],
+    name: "Verification",
+    children: [],
   },
 ];
 </script>
@@ -107,6 +80,7 @@ const menus = [
     permanent
     @click="ctx.rail = false"
   >
+    <v-list-item title="Logo & Nama Perusahaan" nav></v-list-item>
     <v-list-item
       prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
       title="John Doe"
