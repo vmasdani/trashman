@@ -123,7 +123,7 @@ const menus = [
           <v-list-item
             :title="c.name"
             :value="c.name"
-            :href="`/#/${c.value}`"
+            :href="`/#/${(c as any)?.value}`"
           ></v-list-item>
         </template>
       </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
-import GenericApexRadial from "./components/GenericApexRadial.vue";
+// import GenericApexRadial from "./components/GenericApexRadial.vue";
 
 import "leaflet/dist/leaflet.css";
 import { ref } from "vue";
