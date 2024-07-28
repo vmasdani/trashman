@@ -52,6 +52,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUuid($value)
  * @property int|null $created_by
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedBy($value)
+ * @property string|null $address
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAddress($value)
  * @mixin \Eloquent
  */
 class User extends Model

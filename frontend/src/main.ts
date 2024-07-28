@@ -14,6 +14,12 @@ import VueApexCharts from "vue3-apexcharts";
 import ApexCharts from "apexcharts";
 import User from "./pages/User.vue";
 import UserDetail from "./pages/UserDetail.vue";
+import Partner from "./pages/Partner.vue";
+import PartnerDetail from "./pages/PartnerDetail.vue";
+import Material from "./pages/Material.vue";
+import MaterialDetail from "./pages/MaterialDetail.vue";
+import Purchase from "./pages/Purchase.vue";
+import Sales from "./pages/Sales.vue";
 
 // Add this when into a TypeScript codebase
 declare module "@vue/runtime-core" {
@@ -53,6 +59,12 @@ const routes = [
   { path: "/", component: Dashboard },
   { path: "/user", component: User },
   { path: "/user/:id", component: UserDetail },
+  { path: "/partner", component: Partner },
+  { path: "/partner/:id", component: PartnerDetail },
+  { path: "/material", component: Material },
+  { path: "/material/:id", component: MaterialDetail },
+  { path: "/purchase", component: Purchase },
+  { path: "/sales", component: Sales },
 
   // { path: '/about', component: AboutView },
 ];

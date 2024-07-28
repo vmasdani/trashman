@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Material;
+use App\Models\Partner;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +32,28 @@ Route::post('/users', function (Request $r) {
 
     $u = User::query()->updateOrCreate(['id' => isset($body?->id) ? $body?->id : null], (array) $body);
 });
+
+Route::get('/partners', function (Request $r) {
+    return Partner::all();
+});
+Route::get('/partners/{id}', function (Request $r, int $id) {
+    return Partner::query()->find($id);
+});
+Route::post('/partners', function (Request $r) {
+    $body = json_decode($r->getContent());
+
+    $u = Partner::query()->updateOrCreate(['id' => isset($body?->id) ? $body?->id : null], (array) $body);
+});
+
+Route::get('/materials', function (Request $r) {
+    return Material::all();
+});
+Route::get('/materials/{id}', function (Request $r, int $id) {
+    return Material::query()->find($id);
+});
+Route::post('/materials', function (Request $r) {
+    $body = json_decode($r->getContent());
+
+    $u = Material::query()->updateOrCreate(['id' => isset($body?->id) ? $body?->id : null], (array) $body);
+});
+
