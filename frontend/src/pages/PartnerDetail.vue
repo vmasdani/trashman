@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { fetchPartner, fetchUser } from "../fetchers";
+import { fetchPartner,  } from "../fetchers";
 
 const route = useRoute();
 const router = useRouter();
