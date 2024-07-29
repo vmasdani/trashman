@@ -76,6 +76,40 @@ export const fetchMaterials = async () => {
   }
 };
 
+export const fetchTransactions = async () => {
+  try {
+    const resp = await fetch(
+      `${import.meta.env.VITE_APP_BASE_URL}/api/transactions`
+    );
+
+    if (resp.status !== 200) {
+      throw await resp.text();
+    }
+
+    return (await resp.json()) as any[];
+  } catch (e) {
+    return [];
+  }
+};
+
+export const fetchTransaction = async (params: { id: any }) => {
+  try {
+    const resp = await fetch(
+      `${import.meta.env.VITE_APP_BASE_URL}/api/transactions/${
+        params?.id ?? ""
+      }`
+    );
+
+    if (resp.status !== 200) {
+      throw await resp.text();
+    }
+
+    return (await resp.json()) as any;
+  } catch (e) {
+    return [];
+  }
+};
+
 export const fetchMaterial = async (params: { id: any }) => {
   try {
     const resp = await fetch(

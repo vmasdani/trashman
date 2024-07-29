@@ -20,6 +20,8 @@ import Material from "./pages/Material.vue";
 import MaterialDetail from "./pages/MaterialDetail.vue";
 import Purchase from "./pages/Purchase.vue";
 import Sales from "./pages/Sales.vue";
+import Transaction from "./pages/Transaction.vue";
+import TransactionDetail from "./pages/TransactionDetail.vue";
 
 // Add this when into a TypeScript codebase
 declare module "@vue/runtime-core" {
@@ -65,6 +67,9 @@ const routes = [
   { path: "/material/:id", component: MaterialDetail },
   { path: "/purchase", component: Purchase },
   { path: "/sales", component: Sales },
+
+  { path: "/transaction", component: Transaction },
+  { path: "/transaction/:id", component: TransactionDetail },
 
   // { path: '/about', component: AboutView },
 ];

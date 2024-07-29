@@ -2,6 +2,8 @@
 
 use App\Models\Material;
 use App\Models\Partner;
+use App\Models\Transaction;
+use App\Models\TransactionItem;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -57,3 +59,27 @@ Route::post('/materials', function (Request $r) {
     $u = Material::query()->updateOrCreate(['id' => isset($body?->id) ? $body?->id : null], (array) $body);
 });
 
+Route::get('/transactions', function (Request $r) {
+    return Transaction::all()->map(function (Transaction $t) {
+        $t->transactionItems;
+
+        return $t;
+    });
+});
+Route::get('/transactions/{id}', function (Request $r, int $id) {
+    $t = Transaction::query()->find($id);
+
+    $t->transactionItems;
+
+    return $t;
+});
+Route::post('/transactions', function (Request $r) {
+    $body = json_decode($r->getContent());
+
+    $t = Transaction::query()->updateOrCreate(['id' => isset($body?->id) ? $body?->id : null], (array) $body);
+
+    foreach ($body->transaction_items as $i) {
+        $i->transaction_id = $t->id;
+        $ti = TransactionItem::query()->updateOrCreate(['id' => isset($i?->id) ? $i?->id : null], (array) $i);
+    }
+});
