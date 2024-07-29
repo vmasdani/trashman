@@ -42,8 +42,9 @@ const handleFetchMaterials = async () => {
 const init = () => {
   if (!isNaN(parseInt(route?.params?.id as string))) {
     handleFetchTransaction();
-    handleFetchMaterials();
   }
+  handleFetchMaterials();
+
 };
 const windowx = window;
 
