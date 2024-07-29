@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, TrackOpTypes } from "vue";
-import { fetchMaterials, fetchTransactions } from "../fetchers";
+import { ref } from "vue";
+import { fetchTransactions } from "../fetchers";
 import { transactionTypes } from "../helpers";
 // import { fetchUsers } from "../fetchers";
 
