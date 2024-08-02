@@ -35,6 +35,16 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|Partner wherePic($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Partner whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Partner whereUuid($value)
+ * @property string|null $provinsi
+ * @property string|null $kabupaten
+ * @property string|null $kecamatan
+ * @property string|null $kelurahan
+ * @property int|null $legal_entity
+ * @method static \Illuminate\Database\Eloquent\Builder|Partner whereKabupaten($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partner whereKecamatan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partner whereKelurahan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partner whereLegalEntity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Partner whereProvinsi($value)
  * @mixin \Eloquent
  */
 class Partner extends Model
@@ -44,6 +54,11 @@ class Partner extends Model
         'name',
         'email',
         'pic',
+        'provinsi',
+        'kabupaten',
+        'kecamatan',
+        'kelurahan',
+        'legal_entity',
 
         'deleted_at',
         'ordering',
@@ -51,4 +66,9 @@ class Partner extends Model
         'created_by'
 
     ];
+
+    public function partnerMembers()
+    {
+        return $this->hasMany(PartnerMember::class);
+    }
 }

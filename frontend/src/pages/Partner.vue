@@ -1,12 +1,31 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { fetchPartners,  } from "../fetchers";
+import { fetchPartners } from "../fetchers";
+import { legalEntities } from "../helpers";
 
 const partners = ref([] as any[]);
 
 const handleFetchPartners = async () => {
   const d = await fetchPartners();
   partners.value = d;
+};
+
+const handleDelete = async (id: any) => {
+  if (!window.confirm("Confirm delete?")) {
+    return;
+  }
+
+  try {
+    const resp = await fetch(
+      `${import.meta.env.VITE_APP_BASE_URL}/api/partners/${id}`,
+      { method: "delete" }
+    );
+
+    window.location.reload();
+  } catch (e) {
+    alert("Delete failed.");
+    return;
+  }
 };
 
 handleFetchPartners();
@@ -45,7 +64,7 @@ handleFetchPartners();
               'PIC',
               'Address',
               'Members',
-              'Action'
+              'Action',
             ]"
           >
             {{ h }}
@@ -54,21 +73,34 @@ handleFetchPartners();
         <tr v-for="(p, i) in partners">
           <td class="border border-dark">{{ i + 1 }}</td>
           <td class="border border-dark">{{ p?.name ?? "" }}</td>
-          <td class="border border-dark"></td>
+          <td class="border border-dark">
+            {{ legalEntities.find((l) => l.value == p?.legal_entity)?.label }}
+          </td>
           <td class="border border-dark">{{ p?.email ?? "" }}</td>
           <td class="border border-dark">{{ p?.pic }}</td>
-          <td class="border border-dark">{{ p?.address }}</td>
-          <td class="border border-dark"></td>
+          <td class="border border-dark">
+            {{ p?.provinsi }}, {{ p?.kabupaten }}, {{ p?.kecamatan }},
+            {{ p?.kelurahan }}
+          </td>
+          <td class="border border-dark">
+            {{ p?.partner_members?.length ?? 0 }}
+          </td>
 
           <td class="border border-dark">
-            
             <div class="d-flex">
               <a :href="`/#/partner/${p?.id}`">
                 <button class="btn btn-sm btn-primary">
                   <v-icon icon="mdi-pencil" />
                 </button>
               </a>
-              <button class="btn btn-sm btn-danger">
+              <button
+                class="btn btn-sm btn-danger"
+                @click="
+                  () => {
+                    handleDelete(p?.id);
+                  }
+                "
+              >
                 <v-icon icon="mdi-delete" />
               </button>
             </div>

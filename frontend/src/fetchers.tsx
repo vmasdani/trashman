@@ -187,3 +187,67 @@ export const fetchSale = async (params: { id: any }) => {
     return null;
   }
 };
+
+export const fetchProvinsis = async () => {
+  try {
+    const resp = await fetch(
+      `${import.meta.env.VITE_APP_BASE_URL}/api/provinsis`
+    );
+
+    if (resp.status !== 200) {
+      throw await resp.text();
+    }
+
+    return (await resp.json()) as any;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const fetchKabupatens = async (params: { id: any }) => {
+  try {
+    const resp = await fetch(
+      `${import.meta.env.VITE_APP_BASE_URL}/api/kabupatens/${params.id}`
+    );
+
+    if (resp.status !== 200) {
+      throw await resp.text();
+    }
+
+    return (await resp.json()) as any;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const fetchKecamatans = async (params: { id: any }) => {
+  try {
+    const resp = await fetch(
+      `${import.meta.env.VITE_APP_BASE_URL}/api/kecamatans/${params.id}`
+    );
+
+    if (resp.status !== 200) {
+      throw await resp.text();
+    }
+
+    return (await resp.json()) as any;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const fetchKelurahans = async (params: { id: any }) => {
+  try {
+    const resp = await fetch(
+      `${import.meta.env.VITE_APP_BASE_URL}/api/kelurahans/${params.id}`
+    );
+
+    if (resp.status !== 200) {
+      throw await resp.text();
+    }
+
+    return (await resp.json()) as any;
+  } catch (e) {
+    return null;
+  }
+};

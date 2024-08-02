@@ -10,6 +10,24 @@ const handleFetchUsers = async () => {
 };
 
 handleFetchUsers();
+
+const handleDelete = async (id: any) => {
+  if (!window.confirm("Confirm delete?")) {
+    return;
+  }
+
+  try {
+    const resp = await fetch(
+      `${import.meta.env.VITE_APP_BASE_URL}/api/users/${id}`,
+      { method: "delete" }
+    );
+
+    window.location.reload();
+  } catch (e) {
+    alert("Delete failed.");
+    return;
+  }
+};
 </script>
 
 <template>
@@ -77,7 +95,14 @@ handleFetchUsers();
                   <v-icon icon="mdi-pencil" />
                 </button>
               </a>
-              <button class="btn btn-sm btn-danger">
+              <button
+                class="btn btn-sm btn-danger"
+                @click="
+                  () => {
+                    handleDelete(u?.id);
+                  }
+                "
+              >
                 <v-icon icon="mdi-delete" />
               </button>
             </div>
