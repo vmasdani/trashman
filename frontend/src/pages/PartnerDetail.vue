@@ -20,10 +20,10 @@ const kecamatans = ref([] as any[]);
 const kelurahans = ref([] as any[]);
 const members = ref([] as any[]);
 
-const selectedProvinsiId = ref(null as number | null);
-const selectedKabupatenId = ref(null as number | null);
-const selectedKecamatanId = ref(null as number | null);
-const selectedKelurahanId = ref(null as number | null);
+// const selectedProvinsiId = ref(null as number | null);
+// const selectedKabupatenId = ref(null as number | null);
+// const selectedKecamatanId = ref(null as number | null);
+// const selectedKelurahanId = ref(null as number | null);
 
 const handleSave = async () => {
   try {

@@ -16,7 +16,7 @@ const handleDelete = async (id: any) => {
   }
 
   try {
-    const resp = await fetch(
+    await fetch(
       `${import.meta.env.VITE_APP_BASE_URL}/api/materials/${id}`,
       { method: "delete" }
     );
