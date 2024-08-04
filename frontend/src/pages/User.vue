@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { fetchUsers } from "../fetchers";
+import { genders, memberTypes } from "../helpers";
 
 const users = ref([] as any[]);
+const search = ref("");
 
 const handleFetchUsers = async () => {
   const d = await fetchUsers();
@@ -17,10 +19,9 @@ const handleDelete = async (id: any) => {
   }
 
   try {
-     await fetch(
-      `${import.meta.env.VITE_APP_BASE_URL}/api/users/${id}`,
-      { method: "delete" }
-    );
+    await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/users/${id}`, {
+      method: "delete",
+    });
 
     window.location.reload();
   } catch (e) {
@@ -36,7 +37,13 @@ const handleDelete = async (id: any) => {
     <hr class="border border-dark" />
     <div class="d-flex my-2 justify-content-end">
       <div>
-        <input class="form-control form-control-sm" placeholder="Search..." />
+        <input
+          class="form-control form-control-sm"
+          placeholder="Search..."
+          @input="e=>{
+            search= (e.target as HTMLInputElement).value
+          }"
+        />
       </div>
       <div>
         <a href="/#/user/new"
@@ -65,21 +72,35 @@ const handleDelete = async (id: any) => {
               'Address',
               'Member Type',
               'Created Date',
+              'Verified',
               'Actions',
             ]"
           >
             {{ h }}
           </th>
         </tr>
-        <tr v-for="(u, i) in users">
+        <tr
+          v-for="(u, i) in users.filter((m) =>
+            search !== ''
+              ? m?.name
+                  ?.toLowerCase()
+                  .trim()
+                  ?.includes(search.toLowerCase().trim())
+              : true
+          )"
+        >
           <td class="border border-dark">{{ i + 1 }}</td>
-          <td class="border border-dark"></td>
+          <td class="border border-dark">{{ u?.mp }}</td>
           <td class="border border-dark">{{ u?.name ?? "" }}</td>
           <td class="border border-dark">{{ u?.email ?? "" }}</td>
           <td class="border border-dark">{{ u?.phone ?? "" }}</td>
-          <td class="border border-dark"></td>
+          <td class="border border-dark">
+            {{ genders.find((g) => g.value === u?.gender)?.label }}
+          </td>
           <td class="border border-dark">{{ u?.address }}</td>
-          <td class="border border-dark"></td>
+          <td class="border border-dark">
+            {{ memberTypes.find((t) => t.value === u?.member_type)?.label }}
+          </td>
           <td class="border border-dark">
             {{
               Intl.DateTimeFormat("en-US", {
@@ -88,6 +109,11 @@ const handleDelete = async (id: any) => {
               }).format(new Date(u?.created_at ?? new Date())) ?? ""
             }}
           </td>
+          <td
+            :class="`border border-dark ${
+              u?.verified ? `bg-success` : `bg-danger`
+            }`"
+          ></td>
           <td class="border border-dark">
             <div class="d-flex">
               <a :href="`/#/user/${u?.id}`">

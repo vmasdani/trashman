@@ -344,6 +344,18 @@ init();
         }"
       />
     </div>
+    <div><strong>Verified?</strong></div>
+    <div>
+      <input
+        type="checkbox"
+        :checked="user?.verified ? true : false"
+        @click="
+          () => {
+            user.verified = !user.verified;
+          }
+        "
+      />
+    </div>
     <div><strong>Member Type</strong></div>
     <div>
       <v-autocomplete
@@ -353,8 +365,8 @@ init();
         :items="memberTypes"
         :item-title="(p:any) => p?.label"
         :modelValue="
-            memberTypes.find((r) => `${r.value}` === `${user?.member_type}`)
-          "
+          memberTypes.find((r) => `${r.value}` === `${user?.member_type}`)
+        "
         @update:modelValue="
           async (p: any) => {
             user.member_type = p;
@@ -369,7 +381,6 @@ init();
           class="form-control form-control-sm"
           placeholder="Name..."
           :value="user?.family_id"
-        
           @blur="(e) => {
           user.family_id =(e.target as HTMLInputElement).value
         }"

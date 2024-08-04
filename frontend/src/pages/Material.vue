@@ -4,7 +4,7 @@ import { fetchMaterials } from "../fetchers";
 // import { fetchUsers } from "../fetchers";
 
 const materials = ref([] as any[]);
-
+const search = ref("");
 const handleFetchUsers = async () => {
   const d = await fetchMaterials();
   materials.value = d;
@@ -16,10 +16,9 @@ const handleDelete = async (id: any) => {
   }
 
   try {
-    await fetch(
-      `${import.meta.env.VITE_APP_BASE_URL}/api/materials/${id}`,
-      { method: "delete" }
-    );
+    await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/materials/${id}`, {
+      method: "delete",
+    });
 
     window.location.reload();
   } catch (e) {
@@ -37,7 +36,13 @@ handleFetchUsers();
     <hr class="border border-dark" />
     <div class="d-flex my-2 justify-content-end">
       <div>
-        <input class="form-control form-control-sm" placeholder="Search..." />
+        <input
+          class="form-control form-control-sm"
+          placeholder="Search..."
+          @input="e=>{
+          search= (e.target as HTMLInputElement).value
+        }"
+        />
       </div>
       <div>
         <a href="/#/material/new"
@@ -61,7 +66,16 @@ handleFetchUsers();
             {{ h }}
           </th>
         </tr>
-        <tr v-for="(m, i) in materials">
+        <tr
+          v-for="(m, i) in materials.filter((m) =>
+            search !== ''
+              ? m?.name
+                  ?.toLowerCase()
+                  .trim()
+                  ?.includes(search.toLowerCase().trim())
+              : true
+          )"
+        >
           <td class="border border-dark">{{ i + 1 }}</td>
           <td class="border border-dark">{{ m?.name ?? "" }}</td>
           <td class="border border-dark">

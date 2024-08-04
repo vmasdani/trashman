@@ -39,9 +39,14 @@ const menus = [
     name: "Transaction",
     children: [
       {
-        name: "Transaction",
-        value: "transaction",
+        name: "Purchase",
+        value: "purchase",
       },
+      {
+        name: "Sales",
+        value: "sales",
+      },
+
       // {
       //   name: "Sales",
       // },

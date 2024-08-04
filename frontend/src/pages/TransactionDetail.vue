@@ -7,7 +7,17 @@ import { transactionTypes } from "../helpers";
 const route = useRoute();
 const router = useRouter();
 const transaction = ref({} as any);
+const urlParams = new URLSearchParams(window.location.search);
 const materials = ref([] as any[]);
+
+console.log(urlParams.get("type"));
+
+if (urlParams.get("type") === "sales") {
+  transaction.value.type = 1;
+} else if (urlParams.get("type") === "purchase") {
+  transaction.value.type = 0;
+}
+
 const handleSave = async () => {
   try {
     await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/transactions`, {
@@ -44,7 +54,6 @@ const init = () => {
     handleFetchTransaction();
   }
   handleFetchMaterials();
-
 };
 const windowx = window;
 

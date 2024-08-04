@@ -77,6 +77,7 @@ class User extends Model
         'kelurahan',
         'member_type',
         'family_id',
+        'verified',
 
         'deleted_at',
         'ordering',
