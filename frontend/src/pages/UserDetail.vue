@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { fetchUser } from "../fetchers";
+import {
+  fetchKabupatens,
+  fetchKecamatans,
+  fetchKelurahans,
+  fetchProvinsis,
+  fetchUser,
+} from "../fetchers";
+import { genders, memberTypes, roles } from "../helpers";
 
 const route = useRoute();
 const router = useRouter();
 const user = ref({} as any);
+
+const provinsis = ref([] as any[]);
+const kabupatens = ref([] as any[]);
+const kecamatans = ref([] as any[]);
+const kelurahans = ref([] as any[]);
 
 const handleSave = async () => {
   try {
@@ -29,9 +41,18 @@ const handleFetchUser = async () => {
   }
 };
 
+const handleFetchProvinsis = async () => {
+  const d = await fetchProvinsis();
+
+  if (d) {
+    provinsis.value = d;
+  }
+};
+
 const init = () => {
   if (!isNaN(parseInt(route?.params?.id as string))) {
     handleFetchUser();
+    handleFetchProvinsis();
   }
 };
 
@@ -57,7 +78,14 @@ init();
 
     <div><strong>MP</strong></div>
     <div>
-      <input class="form-control form-control-sm" placeholder="Name..." />
+      <input
+        class="form-control form-control-sm"
+        placeholder="Name..."
+        :value="user?.mp"
+        @blur="(e) => {
+          user.mp = (e.target as HTMLInputElement).value
+        }"
+      />
     </div>
     <div><strong>Name</strong></div>
     <div>
@@ -94,28 +122,191 @@ init();
     </div>
     <div><strong>Role</strong></div>
     <div>
-      <input class="form-control form-control-sm" placeholder="Name..." />
+      <v-autocomplete
+        class="form-control form-control-sm"
+        title="Member..."
+        density="comfortable"
+        :items="roles"
+        :item-title="(p:any) => p?.label"
+        :modelValue="roles.find((r) => `${r.value}` === `${user?.role}`)"
+        @update:modelValue="
+          async (p: any) => {
+            user.role = p;
+          }
+        "
+      />
     </div>
     <div><strong>Gender</strong></div>
     <div>
-      <input class="form-control form-control-sm" placeholder="Name..." />
+      <v-autocomplete
+        class="form-control form-control-sm"
+        title="Member..."
+        density="comfortable"
+        :items="genders"
+        :item-title="(p:any) => p?.label"
+        :modelValue="genders.find((r) => `${r.value}` === `${user?.gender}`)"
+        @update:modelValue="
+          async (p: any) => {
+            user.gender = p;
+          }
+        "
+      />
     </div>
-    <div><strong>Country</strong></div>
+    <div><strong>Provinsi</strong></div>
     <div>
-      <input class="form-control form-control-sm" placeholder="Name..." />
+      <v-autocomplete
+        v-if="!user?.provinsi && provinsis.length > 0"
+        class="form-control form-control-sm"
+        title="Provinsi..."
+        density="comfortable"
+        :items="provinsis.map((p) => ({ label: `${p?.nama}`, value: p }))"
+        :item-title="(p:any) => p?.label"
+        @update:modelValue="
+          async (p: any) => {
+            user.provinsi = p?.nama;
+
+            kabupatens = await fetchKabupatens({ id: p?.id });
+          }
+        "
+      />
+      <div v-else>
+        <div class="d-flex">
+          <div>
+            {{ user?.provinsi }}
+          </div>
+          <div
+            class="mx-2"
+            style="cursor: pointer"
+            @click="
+              () => {
+                user.provinsi = null;
+                user.kabupaten = null;
+                user.kecamatan = null;
+                user.kelurahan = null;
+              }
+            "
+          >
+            <v-icon icon="mdi-close-thick" />
+          </div>
+        </div>
+      </div>
     </div>
-    <div><strong>Province</strong></div>
+    <div><strong>Kabupaten</strong></div>
     <div>
-      <input class="form-control form-control-sm" placeholder="Name..." />
+      <v-autocomplete
+        v-if="!user?.kabupaten"
+        class="form-control form-control-sm"
+        title="Kabupaten..."
+        density="comfortable"
+        :items="kabupatens.map((p) => ({ label: `${p?.nama}`, value: p }))"
+        :item-title="(p:any) => p?.label"
+        @update:modelValue="
+          async (p: any) => {
+            user.kabupaten = p?.nama;
+
+            kecamatans = await fetchKecamatans({ id: p?.id });
+          }
+        "
+      />
+      <div v-else>
+        <div class="d-flex">
+          <div>
+            {{ user?.kabupaten }}
+          </div>
+          <div
+            class="mx-2"
+            style="cursor: pointer"
+            @click="
+              () => {
+                // user.provinsi = null;
+                user.kabupaten = null;
+                user.kecamatan = null;
+                user.kelurahan = null;
+              }
+            "
+          >
+            <v-icon icon="mdi-close-thick" />
+          </div>
+        </div>
+      </div>
     </div>
-    <div><strong>Regency</strong></div>
+    <div><strong>Kecamatan</strong></div>
     <div>
-      <input class="form-control form-control-sm" placeholder="Name..." />
+      <v-autocomplete
+        v-if="!user?.kecamatan"
+        class="form-control form-control-sm"
+        title="Kecamatan..."
+        density="comfortable"
+        :items="kecamatans.map((p) => ({ label: `${p?.nama}`, value: p }))"
+        :item-title="(p:any) => p?.label"
+        @update:modelValue="
+          async (p: any) => {
+            user.kecamatan = p?.nama;
+
+            kelurahans = await fetchKelurahans({ id: p?.id });
+          }
+        "
+      />
+      <div v-else>
+        <div class="d-flex">
+          <div>
+            {{ user?.kecamatan }}
+          </div>
+          <div
+            class="mx-2"
+            style="cursor: pointer"
+            @click="
+              () => {
+                // user.provinsi = null;
+                // user.kabupaten = null;
+                user.kecamatan = null;
+                user.kelurahan = null;
+              }
+            "
+          >
+            <v-icon icon="mdi-close-thick" />
+          </div>
+        </div>
+      </div>
     </div>
-    <div><strong>District</strong></div>
+    <div><strong>Kelurahan</strong></div>
     <div>
-      <input class="form-control form-control-sm" placeholder="Name..." />
+      <v-autocomplete
+        v-if="!user?.kelurahan"
+        class="form-control form-control-sm"
+        title="Kelurahan..."
+        density="comfortable"
+        :items="kelurahans.map((p) => ({ label: `${p?.nama}`, value: p }))"
+        :item-title="(p:any) => p?.label"
+        @update:modelValue="
+          async (p: any) => {
+            user.kelurahan = p?.nama;
+          }
+        "
+      />
+      <div v-else>
+        <div class="d-flex">
+          <div>
+            {{ user?.kelurahan }}
+          </div>
+          <div
+            class="mx-2"
+            style="cursor: pointer"
+            @click="
+              () => {
+                // user.provinsi = null;
+                // user.kabupaten = null;
+                // user.kecamatan = null;
+                user.kelurahan = null;
+              }
+            "
+          >
+            <v-icon icon="mdi-close-thick" />
+          </div>
+        </div>
+      </div>
     </div>
+
     <div><strong>Address</strong></div>
     <div>
       <textarea
@@ -146,7 +337,6 @@ init();
         class="form-control form-control-sm"
         placeholder="Name..."
         :value="user?.longitude"
-
         @blur="(e) => {
           user.longitude = isNaN(parseFloat((e.target as HTMLInputElement).value))
             ? undefined
@@ -156,11 +346,37 @@ init();
     </div>
     <div><strong>Member Type</strong></div>
     <div>
-      <input class="form-control form-control-sm" placeholder="Name..." />
+      <v-autocomplete
+        class="form-control form-control-sm"
+        title="Member Type..."
+        density="comfortable"
+        :items="memberTypes"
+        :item-title="(p:any) => p?.label"
+        :modelValue="
+            memberTypes.find((r) => `${r.value}` === `${user?.member_type}`)
+          "
+        @update:modelValue="
+          async (p: any) => {
+            user.member_type = p;
+
+            kelurahans = await fetchKelurahans({ id: p?.id });
+          }
+        "
+      />
     </div>
-    <div><strong>Family ID</strong></div>
-    <div>
-      <input class="form-control form-control-sm" placeholder="Name..." />
-    </div>
+    <template v-if="user?.member_type === 0">
+      <div><strong>Family ID</strong></div>
+      <div>
+        <input
+          class="form-control form-control-sm"
+          placeholder="Name..."
+          :value="user?.family_id"
+        
+          @blur="(e) => {
+          user.family_id =(e.target as HTMLInputElement).value
+        }"
+        />
+      </div>
+    </template>
   </div>
 </template>

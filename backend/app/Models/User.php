@@ -70,6 +70,13 @@ class User extends Model
         'latitude',
         'longitude',
         'address',
+        'mp',
+        'provinsi',
+        'kabupaten',
+        'kecamatan',
+        'kelurahan',
+        'member_type',
+        'family_id',
 
         'deleted_at',
         'ordering',
