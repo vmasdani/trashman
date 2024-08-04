@@ -358,8 +358,6 @@ init();
         @update:modelValue="
           async (p: any) => {
             user.member_type = p;
-
-            kelurahans = await fetchKelurahans({ id: p?.id });
           }
         "
       />
