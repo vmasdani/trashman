@@ -52,8 +52,9 @@ const handleFetchProvinsis = async () => {
 const init = () => {
   if (!isNaN(parseInt(route?.params?.id as string))) {
     handleFetchUser();
-    handleFetchProvinsis();
   }
+  handleFetchProvinsis();
+
 };
 
 init();

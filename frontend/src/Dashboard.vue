@@ -4,6 +4,42 @@ import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 
 import "leaflet/dist/leaflet.css";
 import { ref } from "vue";
+import {
+  fetchMaterials,
+  fetchPartners,
+  fetchProvinsis,
+  fetchUsers,
+} from "./fetchers";
+
+const provinsis = ref([] as any[]);
+const partners = ref([] as any[]);
+const users = ref([] as any[]);
+const materials = ref([] as any[]);
+
+const handleFetchProvinsis = async () => {
+  const d = await fetchProvinsis();
+
+  if (d) {
+    provinsis.value = d;
+  }
+};
+const handleFetchPartners = async () => {
+  const d = await fetchPartners();
+  partners.value = d;
+};
+const handleFetchUsers = async () => {
+  const d = await fetchUsers();
+  users.value = d;
+};
+const handleFetchMaterials = async () => {
+  const d = await fetchMaterials();
+  materials.value = d;
+};
+handleFetchUsers();
+handleFetchPartners();
+handleFetchProvinsis();
+handleFetchMaterials();
+
 const zoom = ref(4);
 </script>
 <template>
@@ -13,51 +49,51 @@ const zoom = ref(4);
         <div class="d-flex mx-2 bg-light">
           <div class="flex-grow-1">
             <v-autocomplete
+              label="Provinsi..."
               density="comfortable"
-              label="Province"
-              :items="[
-                'California',
-                'Colorado',
-                'Florida',
-                'Georgia',
-                'Texas',
-                'Wyoming',
-              ]"
-            ></v-autocomplete>
+              :items="provinsis.map((p) => ({ label: `${p?.nama}`, value: p }))"
+              :item-title="(p:any) => p?.label"
+              @update:modelValue="
+                async (p: any) => {
+                  // user.provinsi = p?.nama;
+                  // kabupatens = await fetchKabupatens({ id: p?.id });
+                }
+              "
+            />
           </div>
 
           <div class="flex-grow-1 mx-2">
             <v-autocomplete
+              label="Member..."
               density="comfortable"
-              label="Member"
-              :items="[
-                'California',
-                'Colorado',
-                'Florida',
-                'Georgia',
-                'Texas',
-                'Wyoming',
-              ]"
-            ></v-autocomplete>
+              :items="users.map((p) => ({ label: `${p?.name}`, value: p }))"
+              :item-title="(p:any) => p?.label"
+              @update:modelValue="
+                async (p: any) => {
+                  // user.provinsi = p?.nama;
+                  // kabupatens = await fetchKabupatens({ id: p?.id });
+                }
+              "
+            />
           </div>
 
           <div class="flex-grow-1 mx-2">
             <v-autocomplete
+              label="Partner..."
               density="comfortable"
-              label="Partner"
-              :items="[
-                'California',
-                'Colorado',
-                'Florida',
-                'Georgia',
-                'Texas',
-                'Wyoming',
-              ]"
-            ></v-autocomplete>
+              :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
+              :item-title="(p:any) => p?.label"
+              @update:modelValue="
+                async (p: any) => {
+                  // user.provinsi = p?.nama;
+                  // kabupatens = await fetchKabupatens({ id: p?.id });
+                }
+              "
+            />
           </div>
         </div>
 
-        <div style="height: 35vh; width: 60vw">
+        <div style="height: 45vh; width: 60vw">
           <LMap
             :use-global-leaflet="false"
             ref="map"
@@ -82,17 +118,17 @@ const zoom = ref(4);
 
         <div>
           <v-autocomplete
-            density="comfortable"
-            label="Partner"
-            :items="[
-              'California',
-              'Colorado',
-              'Florida',
-              'Georgia',
-              'Texas',
-              'Wyoming',
-            ]"
-          ></v-autocomplete>
+              label="Partner..."
+              density="comfortable"
+              :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
+              :item-title="(p:any) => p?.label"
+              @update:modelValue="
+                async (p: any) => {
+                  // user.provinsi = p?.nama;
+                  // kabupatens = await fetchKabupatens({ id: p?.id });
+                }
+              "
+            />
         </div>
 
         <div>
@@ -156,59 +192,59 @@ const zoom = ref(4);
       <div class="d-flex align-items-center mx-2 bg-light">
         <div class="flex-grow-1 mx-2">
           <v-autocomplete
-            density="comfortable"
-            label="Material"
-            :items="[
-              'California',
-              'Colorado',
-              'Florida',
-              'Georgia',
-              'Texas',
-              'Wyoming',
-            ]"
-          ></v-autocomplete>
+              label="Material..."
+              density="comfortable"
+              :items="materials.map((p) => ({ label: `${p?.name}`, value: p }))"
+              :item-title="(p:any) => p?.label"
+              @update:modelValue="
+                async (p: any) => {
+                  // user.provinsi = p?.nama;
+                  // kabupatens = await fetchKabupatens({ id: p?.id });
+                }
+              "
+            />
         </div>
         <div class="flex-grow-1 mx-2">
           <v-autocomplete
-            density="comfortable"
-            label="Year"
-            :items="[
-              'California',
-              'Colorado',
-              'Florida',
-              'Georgia',
-              'Texas',
-              'Wyoming',
-            ]"
-          ></v-autocomplete>
+              label="Year..."
+              density="comfortable"
+              :items="materials.map((p) => ({ label: `${p?.name}`, value: p }))"
+              :item-title="(p:any) => p?.label"
+              @update:modelValue="
+                async (p: any) => {
+                  // user.provinsi = p?.nama;
+                  // kabupatens = await fetchKabupatens({ id: p?.id });
+                }
+              "
+            />
         </div>
         <div class="flex-grow-1 mx-2">
           <v-autocomplete
-            density="comfortable"
-            label="Province"
-            :items="[
-              'California',
-              'Colorado',
-              'Florida',
-              'Georgia',
-              'Texas',
-              'Wyoming',
-            ]"
-          ></v-autocomplete>
+              label="Provinsi..."
+              density="comfortable"
+              :items="provinsis.map((p) => ({ label: `${p?.nama}`, value: p }))"
+              :item-title="(p:any) => p?.label"
+              @update:modelValue="
+                async (p: any) => {
+                  // user.provinsi = p?.nama;
+                  // kabupatens = await fetchKabupatens({ id: p?.id });
+                }
+              "
+            />
         </div>
         <div class="flex-grow-1 mx-2">
           <v-autocomplete
-            density="comfortable"
-            label="Partner"
-            :items="[
-              'California',
-              'Colorado',
-              'Florida',
-              'Georgia',
-              'Texas',
-              'Wyoming',
-            ]"
-          ></v-autocomplete>
+              label="Partner..."
+              density="comfortable"
+              :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
+              :item-title="(p:any) => p?.label"
+              @update:modelValue="
+                async (p: any) => {
+                  // user.provinsi = p?.nama;
+                  // kabupatens = await fetchKabupatens({ id: p?.id });
+                }
+              "
+            />
         </div>
         <div class="mx-2">
           <button class="btn btn-sm btn-success">
