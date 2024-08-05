@@ -54,7 +54,7 @@ const zoom = ref(4);
               :items="provinsis.map((p) => ({ label: `${p?.nama}`, value: p }))"
               :item-title="(p:any) => p?.label"
               @update:modelValue="
-                async (p: any) => {
+                async () => {
                   // user.provinsi = p?.nama;
                   // kabupatens = await fetchKabupatens({ id: p?.id });
                 }
@@ -69,7 +69,7 @@ const zoom = ref(4);
               :items="users.map((p) => ({ label: `${p?.name}`, value: p }))"
               :item-title="(p:any) => p?.label"
               @update:modelValue="
-                async (p: any) => {
+                async () => {
                   // user.provinsi = p?.nama;
                   // kabupatens = await fetchKabupatens({ id: p?.id });
                 }
@@ -84,7 +84,7 @@ const zoom = ref(4);
               :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
               :item-title="(p:any) => p?.label"
               @update:modelValue="
-                async (p: any) => {
+                async () => {
                   // user.provinsi = p?.nama;
                   // kabupatens = await fetchKabupatens({ id: p?.id });
                 }
@@ -123,7 +123,7 @@ const zoom = ref(4);
               :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
               :item-title="(p:any) => p?.label"
               @update:modelValue="
-                async (p: any) => {
+                async () => {
                   // user.provinsi = p?.nama;
                   // kabupatens = await fetchKabupatens({ id: p?.id });
                 }
@@ -197,7 +197,7 @@ const zoom = ref(4);
               :items="materials.map((p) => ({ label: `${p?.name}`, value: p }))"
               :item-title="(p:any) => p?.label"
               @update:modelValue="
-                async (p: any) => {
+                async () => {
                   // user.provinsi = p?.nama;
                   // kabupatens = await fetchKabupatens({ id: p?.id });
                 }
@@ -211,7 +211,7 @@ const zoom = ref(4);
               :items="materials.map((p) => ({ label: `${p?.name}`, value: p }))"
               :item-title="(p:any) => p?.label"
               @update:modelValue="
-                async (p: any) => {
+                async () => {
                   // user.provinsi = p?.nama;
                   // kabupatens = await fetchKabupatens({ id: p?.id });
                 }
@@ -225,7 +225,7 @@ const zoom = ref(4);
               :items="provinsis.map((p) => ({ label: `${p?.nama}`, value: p }))"
               :item-title="(p:any) => p?.label"
               @update:modelValue="
-                async (p: any) => {
+                async () => {
                   // user.provinsi = p?.nama;
                   // kabupatens = await fetchKabupatens({ id: p?.id });
                 }
@@ -239,7 +239,7 @@ const zoom = ref(4);
               :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
               :item-title="(p:any) => p?.label"
               @update:modelValue="
-                async (p: any) => {
+                async () => {
                   // user.provinsi = p?.nama;
                   // kabupatens = await fetchKabupatens({ id: p?.id });
                 }
