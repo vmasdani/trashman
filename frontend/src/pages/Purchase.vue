@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { fetchTransactions } from "../fetchers";
-import { transactionTypes } from "../helpers";
+// import { transactionTypes } from "../helpers";
 // import { fetchUsers } from "../fetchers";
 
 const materials = ref([] as any[]);
