@@ -45,6 +45,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|Partner whereKelurahan($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Partner whereLegalEntity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Partner whereProvinsi($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PartnerMember> $partnerMembers
+ * @property-read int|null $partner_members_count
  * @mixin \Eloquent
  */
 class Partner extends Model

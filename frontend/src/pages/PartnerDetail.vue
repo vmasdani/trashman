@@ -106,6 +106,8 @@ init();
     <div>
       <input class="form-control form-control-sm" placeholder="Name..." />
     </div> -->
+    <div><strong>Country: Indonesia</strong></div>
+    <!-- <div><strong>Indonesia</strong></div> -->
     <div><strong>Provinsi</strong></div>
     <div>
       <v-autocomplete

@@ -54,6 +54,24 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedBy($value)
  * @property string|null $address
  * @method static \Illuminate\Database\Eloquent\Builder|User whereAddress($value)
+ * @property string|null $mp
+ * @property string|null $provinsi
+ * @property string|null $kabupaten
+ * @property string|null $kecamatan
+ * @property string|null $kelurahan
+ * @property int|null $member_type
+ * @property string|null $family_id
+ * @property int|null $verified
+ * @property string|null $verified_date
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFamilyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereKabupaten($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereKecamatan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereKelurahan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereMemberType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereMp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereProvinsi($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereVerified($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereVerifiedDate($value)
  * @mixin \Eloquent
  */
 class User extends Model
@@ -78,6 +96,7 @@ class User extends Model
         'member_type',
         'family_id',
         'verified',
+        'verified_date',
 
         'deleted_at',
         'ordering',

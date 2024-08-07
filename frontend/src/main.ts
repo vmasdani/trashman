@@ -22,6 +22,7 @@ import Purchase from "./pages/Purchase.vue";
 import Sales from "./pages/Sales.vue";
 import Transaction from "./pages/Transaction.vue";
 import TransactionDetail from "./pages/TransactionDetail.vue";
+import Verification from "./pages/Verification.vue";
 
 // Add this when into a TypeScript codebase
 declare module "@vue/runtime-core" {
@@ -70,6 +71,8 @@ const routes = [
 
   { path: "/transaction", component: Transaction },
   { path: "/transaction/:id", component: TransactionDetail },
+
+  { path: "/verification", component: Verification },
 
   // { path: '/about', component: AboutView },
 ];

@@ -3,7 +3,16 @@ export const transactionTypes = [
   { value: 1, label: "Sell" },
 ];
 
-export const memberTypes = [{ value: 0, label: "Junkyard" }];
+export const memberTypes = [
+  { value: 0, label: "Brand Owner" },
+  { value: 1, label: "Recycler" },
+  { value: 2, label: "Aggregator" },
+  { value: 3, label: "Government Institution" },
+
+  { value: 4, label: "Government Educational Institution" },
+  { value: 5, label: "Government Religious Institution" },
+  { value: 6, label: "Junkyard/MRF" },
+];
 
 export const legalEntities = [
   { value: 0, label: "UD" },

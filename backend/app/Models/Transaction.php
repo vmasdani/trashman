@@ -35,6 +35,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUuid($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Partner> $supplier
+ * @property-read int|null $supplier_count
  * @mixin \Eloquent
  */
 class Transaction extends Model
@@ -42,8 +44,14 @@ class Transaction extends Model
     protected $fillable = [
         'id',
         'type',
-        'nota'
+        'nota',
+        'supplier_id',
     ];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Partner::class, 'supplier_id');
+    }
 
     public function transactionItems()
     {

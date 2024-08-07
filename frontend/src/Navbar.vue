@@ -55,7 +55,12 @@ const menus = [
   {
     icon: "mdi-account",
     name: "Verification",
-    children: [],
+    children: [
+    {
+        name: "Verification",
+        value: "verification",
+      },
+    ],
   },
 ];
 </script>

@@ -103,6 +103,7 @@ Route::post('/materials', function (Request $r) {
 Route::get('/transactions', function (Request $r) {
     return Transaction::all()->map(function (Transaction $t) {
         $t->transactionItems;
+        $t->supplier;
 
         return $t;
     });
@@ -111,6 +112,8 @@ Route::get('/transactions/{id}', function (Request $r, int $id) {
     $t = Transaction::query()->find($id);
 
     $t->transactionItems;
+    $t->supplier;
+
 
     return $t;
 });

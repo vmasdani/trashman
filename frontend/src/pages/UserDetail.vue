@@ -54,7 +54,6 @@ const init = () => {
     handleFetchUser();
   }
   handleFetchProvinsis();
-
 };
 
 init();
@@ -153,6 +152,8 @@ init();
         "
       />
     </div>
+    <div><strong>Country: Indonesia</strong></div>
+    <!-- <div><strong>Indonesia</strong></div> -->
     <div><strong>Provinsi</strong></div>
     <div>
       <v-autocomplete
@@ -345,18 +346,7 @@ init();
         }"
       />
     </div>
-    <div><strong>Verified?</strong></div>
-    <div>
-      <input
-        type="checkbox"
-        :checked="user?.verified ? true : false"
-        @click="
-          () => {
-            user.verified = !user.verified;
-          }
-        "
-      />
-    </div>
+   
     <div><strong>Member Type</strong></div>
     <div>
       <v-autocomplete

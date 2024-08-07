@@ -13,20 +13,32 @@ const handleFetchUsers = async () => {
 
 handleFetchUsers();
 
-const handleDelete = async (id: any) => {
-  if (!window.confirm("Confirm delete?")) {
+const handleVerify = async (u: any) => {
+  if (
+    !window.confirm(`${u?.verified_date ? `Undo ` : ``}Verify user ${u?.name}?`)
+  ) {
     return;
   }
 
   try {
-    await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/users/${id}`, {
-      method: "delete",
+    await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/users`, {
+      method: "post",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        ...u,
+        verified_date: u.verified_date
+          ? null
+          : new Date(
+              new Date().getTime() - new Date().getTimezoneOffset() * 60000
+            )
+              .toISOString()
+              .split("T")?.[0],
+      }),
     });
 
-    window.location.reload();
+    handleFetchUsers();
   } catch (e) {
-    alert("Delete failed.");
-    return;
+    console.error(e);
   }
 };
 </script>
@@ -61,7 +73,7 @@ const handleDelete = async (id: any) => {
         <tr>
           <th
             style="position: sticky; top: 0"
-            class="bg-dark text-light text-center"
+            class="bg-dark text-light"
             v-for="h in [
               '#',
               'MP',
@@ -69,12 +81,10 @@ const handleDelete = async (id: any) => {
               'Email',
               'Telp',
               'Gender',
-              'Location',
               'Address',
               'Member Type',
               'Created Date',
               'Verified',
-              'Actions',
             ]"
           >
             {{ h }}
@@ -98,8 +108,6 @@ const handleDelete = async (id: any) => {
           <td class="border border-dark">
             {{ genders.find((g) => g.value === u?.gender)?.label }}
           </td>
-          <td class="border border-dark">Indonesia, {{ u?.provinsi }},{{ u?.kecamatan }}</td>
-
           <td class="border border-dark">{{ u?.address }}</td>
           <td class="border border-dark">
             {{ memberTypes.find((t) => t.value === u?.member_type)?.label }}
@@ -113,6 +121,12 @@ const handleDelete = async (id: any) => {
             }}
           </td>
           <td
+            style="cursor: pointer"
+            @click="
+              () => {
+                handleVerify(u);
+              }
+            "
             :class="`border border-dark ${
               u?.verified_date ? `bg-success` : `bg-danger`
             }`"
@@ -120,29 +134,11 @@ const handleDelete = async (id: any) => {
             {{
               u?.verified_date
                 ? Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(
-                    new Date(u?.verified_date)
+                    new Date(u?.verified_date ?? "")
                   )
                 : ""
             }}
-          </td>
-          <td class="border border-dark">
-            <div class="d-flex">
-              <a :href="`/#/user/${u?.id}`">
-                <button class="btn btn-sm btn-primary">
-                  <v-icon icon="mdi-pencil" />
-                </button>
-              </a>
-              <button
-                class="btn btn-sm btn-danger"
-                @click="
-                  () => {
-                    handleDelete(u?.id);
-                  }
-                "
-              >
-                <v-icon icon="mdi-delete" />
-              </button>
-            </div>
+            (Click to change)
           </td>
         </tr>
       </table>

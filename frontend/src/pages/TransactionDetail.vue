@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { fetchMaterials, fetchTransaction } from "../fetchers";
+import { fetchMaterials, fetchPartners, fetchTransaction } from "../fetchers";
 import { transactionTypes } from "../helpers";
 
 const route = useRoute();
@@ -9,6 +9,7 @@ const router = useRouter();
 const transaction = ref({} as any);
 const urlParams = new URLSearchParams(window.location.search);
 const materials = ref([] as any[]);
+const partners = ref([] as any[]);
 
 console.log(urlParams.get("type"));
 
@@ -49,11 +50,17 @@ const handleFetchMaterials = async () => {
   }
 };
 
+const handleFetchPartners = async () => {
+  const d = await fetchPartners();
+  partners.value = d;
+};
+
 const init = () => {
   if (!isNaN(parseInt(route?.params?.id as string))) {
     handleFetchTransaction();
   }
   handleFetchMaterials();
+  handleFetchPartners();
 };
 const windowx = window;
 
@@ -116,7 +123,23 @@ init();
 
     <div><strong>Supplier</strong></div>
     <div>
-      <input class="form-control form-control-sm" placeholder="Supplier..." />
+      <v-autocomplete
+        class="form-control form-control-sm"
+        title="Supplier..."
+        density="comfortable"
+        :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
+        :modelValue="
+          partners
+            .map((p) => ({ label: `${p?.name}`, value: p }))
+            .find((p) => p.value?.id === transaction?.supplier_id)
+        "
+        :item-title="(p:any) => p?.label"
+        @update:modelValue="
+          async (p: any) => {
+            transaction.supplier_id = p?.id;
+          }
+        "
+      />
     </div>
 
     <div><strong>Buyer</strong></div>

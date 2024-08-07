@@ -61,7 +61,7 @@ handleFetchPartners();
         <tr>
           <th
             style="position: sticky; top: 0"
-            class="bg-dark text-light"
+            class="bg-dark text-light text-center"
             v-for="h in [
               '#',
               'Name',
@@ -94,8 +94,7 @@ handleFetchPartners();
           <td class="border border-dark">{{ p?.email ?? "" }}</td>
           <td class="border border-dark">{{ p?.pic }}</td>
           <td class="border border-dark">
-            {{ p?.provinsi }}, {{ p?.kabupaten }}, {{ p?.kecamatan }},
-            {{ p?.kelurahan }}
+            {{ p?.kelurahan }}, {{ p?.kecamatan }}, {{ p?.kabupaten }}, {{ p?.provinsi }}, Indonesia
           </td>
           <td class="border border-dark">
             {{ p?.partner_members?.length ?? 0 }}

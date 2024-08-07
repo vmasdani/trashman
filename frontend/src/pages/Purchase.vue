@@ -41,7 +41,7 @@ handleFetchTransactions();
             class="bg-dark text-light"
             v-for="h in [
               '#',
-              'Type',
+              // 'Type',
               'Nota',
               'Date',
               'Supplier',
@@ -57,11 +57,11 @@ handleFetchTransactions();
             m?.type !== null && m?.type !== undefined ? m?.type === 0 : true
           )">
           <td class="border border-dark">{{ i + 1 }}</td>
-          <td class="border border-dark">
+          <!-- <td class="border border-dark">
             {{
               transactionTypes.find((t) => `${t.value}` === `${m?.type}`)?.label
             }}
-          </td>
+          </td> -->
           <td class="border border-dark">{{ m?.nota ?? "" }}</td>
           <td class="border border-dark">
             {{

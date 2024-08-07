@@ -118,17 +118,17 @@ const zoom = ref(4);
 
         <div>
           <v-autocomplete
-              label="Partner..."
-              density="comfortable"
-              :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
-              :item-title="(p:any) => p?.label"
-              @update:modelValue="
-                async () => {
-                  // user.provinsi = p?.nama;
-                  // kabupatens = await fetchKabupatens({ id: p?.id });
-                }
-              "
-            />
+            label="Partner..."
+            density="comfortable"
+            :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
+            :item-title="(p:any) => p?.label"
+            @update:modelValue="
+              async () => {
+                // user.provinsi = p?.nama;
+                // kabupatens = await fetchKabupatens({ id: p?.id });
+              }
+            "
+          />
         </div>
 
         <div>
@@ -155,11 +155,11 @@ const zoom = ref(4);
         class="p-3 mr-3 rounded rounded-md flex-grow-1 shadow shadow-md bg-light"
       >
         <div>
-          <div>
+          <div class="d-flex justify-content-center">
             <h4>Purchased</h4>
           </div>
 
-          <div><h2>23 Kg</h2></div>
+          <div class="d-flex justify-content-center"><h2>23 Kg</h2></div>
         </div>
       </div>
 
@@ -167,11 +167,11 @@ const zoom = ref(4);
         class="p-3 mx-3 rounded rounded-md flex-grow-1 shadow shadow-md bg-light"
       >
         <div>
-          <div>
+          <div class="d-flex justify-content-center">
             <h4>Sales</h4>
           </div>
 
-          <div><h2>23 Kg</h2></div>
+          <div class="d-flex justify-content-center"><h2>23 Kg</h2></div>
         </div>
       </div>
 
@@ -179,11 +179,11 @@ const zoom = ref(4);
         class="p-3 ml-3 rounded rounded-md flex-grow-1 shadow shadow-md bg-light"
       >
         <div>
-          <div>
+          <div class="d-flex justify-content-center">
             <h4>Active Location</h4>
           </div>
 
-          <div><h2>313</h2></div>
+          <div class="d-flex justify-content-center"><h2>313</h2></div>
         </div>
       </div>
     </div>
@@ -192,59 +192,75 @@ const zoom = ref(4);
       <div class="d-flex align-items-center mx-2 bg-light">
         <div class="flex-grow-1 mx-2">
           <v-autocomplete
-              label="Material..."
-              density="comfortable"
-              :items="materials.map((p) => ({ label: `${p?.name}`, value: p }))"
-              :item-title="(p:any) => p?.label"
-              @update:modelValue="
-                async () => {
-                  // user.provinsi = p?.nama;
-                  // kabupatens = await fetchKabupatens({ id: p?.id });
-                }
-              "
-            />
+            label="Material..."
+            density="comfortable"
+            :items="materials.map((p) => ({ label: `${p?.name}`, value: p }))"
+            :item-title="(p:any) => p?.label"
+            @update:modelValue="
+              async () => {
+                // user.provinsi = p?.nama;
+                // kabupatens = await fetchKabupatens({ id: p?.id });
+              }
+            "
+          />
         </div>
         <div class="flex-grow-1 mx-2">
           <v-autocomplete
-              label="Year..."
-              density="comfortable"
-              :items="materials.map((p) => ({ label: `${p?.name}`, value: p }))"
-              :item-title="(p:any) => p?.label"
-              @update:modelValue="
-                async () => {
-                  // user.provinsi = p?.nama;
-                  // kabupatens = await fetchKabupatens({ id: p?.id });
-                }
-              "
-            />
+            label="Year..."
+            density="comfortable"
+            :items="
+              [
+                ...(() => {
+                  const ar = [...Array(5)]
+                    .map((_, i) => i)
+                    .map((n) => new Date().getFullYear() - (n + 1));
+
+                  ar.reverse();
+
+                  return ar;
+                })(),
+                new Date().getFullYear(),
+                ...[...Array(5)]
+                  .map((_, i) => i)
+                  .map((n) => new Date().getFullYear() + (n + 1)),
+              ].map((p) => ({ label: `${p}`, value: p }))
+            "
+            :item-title="(p:any) => p?.label"
+            @update:modelValue="
+              async () => {
+                // user.provinsi = p?.nama;
+                // kabupatens = await fetchKabupatens({ id: p?.id });
+              }
+            "
+          />
         </div>
         <div class="flex-grow-1 mx-2">
           <v-autocomplete
-              label="Provinsi..."
-              density="comfortable"
-              :items="provinsis.map((p) => ({ label: `${p?.nama}`, value: p }))"
-              :item-title="(p:any) => p?.label"
-              @update:modelValue="
-                async () => {
-                  // user.provinsi = p?.nama;
-                  // kabupatens = await fetchKabupatens({ id: p?.id });
-                }
-              "
-            />
+            label="Provinsi..."
+            density="comfortable"
+            :items="provinsis.map((p) => ({ label: `${p?.nama}`, value: p }))"
+            :item-title="(p:any) => p?.label"
+            @update:modelValue="
+              async () => {
+                // user.provinsi = p?.nama;
+                // kabupatens = await fetchKabupatens({ id: p?.id });
+              }
+            "
+          />
         </div>
         <div class="flex-grow-1 mx-2">
           <v-autocomplete
-              label="Partner..."
-              density="comfortable"
-              :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
-              :item-title="(p:any) => p?.label"
-              @update:modelValue="
-                async () => {
-                  // user.provinsi = p?.nama;
-                  // kabupatens = await fetchKabupatens({ id: p?.id });
-                }
-              "
-            />
+            label="Partner..."
+            density="comfortable"
+            :items="partners.map((p) => ({ label: `${p?.name}`, value: p }))"
+            :item-title="(p:any) => p?.label"
+            @update:modelValue="
+              async () => {
+                // user.provinsi = p?.nama;
+                // kabupatens = await fetchKabupatens({ id: p?.id });
+              }
+            "
+          />
         </div>
         <div class="mx-2">
           <button class="btn btn-sm btn-success">
@@ -254,10 +270,11 @@ const zoom = ref(4);
       </div>
 
       <div class="px-3 border border-secondary rounded rounded-md mx-3">
+        <div><strong>Snapshot Monthly</strong></div>
         <table class="table table-sm table-bordered my-2 rounded rounded-md">
           <tr style="background-color: grey">
             <th
-              class="border border-secondary text-light"
+              class="border border-secondary text-light text-center"
               v-for="h in [
                 '#',
                 'Month',
@@ -275,47 +292,126 @@ const zoom = ref(4);
           <tr
             v-for="(d, i) in [
               {
-                month: 'Jan',
+                month: 'May',
                 year: 2024,
-                newMember: 50,
-                activeMember: 100,
-                material: 100,
-                total: 100,
+                newMember: users.filter(
+                  (u) =>
+                    new Date(u?.created_at ?? '').getFullYear() === 2024 &&
+                    new Date(u?.created_at ?? '').getMonth() === 4
+                ).length,
+                activeMember: users.filter(
+                  (u) =>
+                    u?.verified_date &&
+                    new Date(u?.verified_date).getTime() <
+                      new Date(2024, 5).getTime()
+                ).length,
+                material: materials.filter(
+                  (u) =>
+                    new Date(u?.created_at ?? '').getFullYear() === 2024 &&
+                    new Date(u?.created_at ?? '').getMonth() === 4
+                ).length,
+                total: users.filter(
+                  (u) =>
+                    u?.created_at &&
+                    new Date(u?.created_at).getTime() <
+                      new Date(2024, 5).getTime()
+                ).length,
               },
               {
-                month: 'Feb',
+                month: 'Jun',
                 year: 2024,
-                newMember: 50,
-                activeMember: 150,
-                material: 100,
-                total: 100,
+                newMember: users.filter(
+                  (u) =>
+                    new Date(u?.created_at ?? '').getFullYear() === 2024 &&
+                    new Date(u?.created_at ?? '').getMonth() === 5
+                ).length,
+                activeMember: users.filter(
+                  (u) =>
+                    u?.verified_date &&
+                    new Date(u?.verified_date).getTime() <
+                      new Date(2024, 6).getTime()
+                ).length,
+                material: materials.filter(
+                  (u) =>
+                    new Date(u?.created_at ?? '').getFullYear() === 2024 &&
+                    new Date(u?.created_at ?? '').getMonth() === 5
+                ).length,
+                total: users.filter(
+                  (u) =>
+                    u?.created_at &&
+                    new Date(u?.created_at).getTime() <
+                      new Date(2024, 6).getTime()
+                ).length,
               },
               {
-                month: 'Mar',
+                month: 'Jul',
                 year: 2024,
-                newMember: 50,
-                activeMember: 200,
-                material: 100,
-                total: 100,
+                newMember: users.filter(
+                  (u) =>
+                    new Date(u?.created_at ?? '').getFullYear() === 2024 &&
+                    new Date(u?.created_at ?? '').getMonth() === 6
+                ).length,
+                activeMember: users.filter(
+                  (u) =>
+                    u?.verified_date &&
+                    new Date(u?.verified_date).getTime() <
+                      new Date(2024, 7).getTime()
+                ).length,
+                material: materials.filter(
+                  (u) =>
+                    new Date(u?.created_at ?? '').getFullYear() === 2024 &&
+                    new Date(u?.created_at ?? '').getMonth() === 6
+                ).length,
+                total: users.filter(
+                  (u) =>
+                    u?.created_at &&
+                    new Date(u?.created_at).getTime() <
+                      new Date(2024, 7).getTime()
+                ).length,
               },
               {
-                month: 'Apr',
+                month: 'Aug',
                 year: 2024,
-                newMember: 200,
-                activeMember: 400,
-                material: 100,
-                total: 100,
+                newMember: users.filter(
+                  (u) =>
+                    new Date(u?.created_at ?? '').getFullYear() === 2024 &&
+                    new Date(u?.created_at ?? '').getMonth() === 7
+                ).length,
+                activeMember: users.filter(
+                  (u) =>
+                    u?.verified_date &&
+                    new Date(u?.verified_date).getTime() <
+                      new Date(2024, 8).getTime()
+                ).length,
+                material: materials.filter(
+                  (u) =>
+                    new Date(u?.created_at ?? '').getFullYear() === 2024 &&
+                    new Date(u?.created_at ?? '').getMonth() === 7
+                ).length,
+                total: users.filter(
+                  (u) =>
+                    u?.created_at &&
+                    new Date(u?.created_at).getTime() <
+                      new Date(2024, 8).getTime()
+                ).length,
               },
             ]"
           >
-            <td class="border border-secondary">{{ i + 1 }}</td>
-            <td class="border border-secondary">{{ d?.month }}</td>
-            <td class="border border-secondary">{{ d?.year }}</td>
+            <td class="border border-secondary text-center">{{ i + 1 }}</td>
+            <td class="border border-secondary text-center">{{ d?.month }}</td>
+            <td class="border border-secondary text-center">{{ d?.year }}</td>
 
-            <td class="border border-secondary">{{ d?.activeMember }}</td>
-            <td class="border border-secondary">{{ d?.material }}</td>
-            <td class="border border-secondary">{{ d?.total }}</td>
-            <td class="border border-secondary">{{ i + 1 }}</td>
+            <td class="border border-secondary text-center">
+              {{ d?.newMember }}
+            </td>
+            <td class="border border-secondary text-center">
+              {{ d?.activeMember }}
+            </td>
+            <td class="border border-secondary text-center">
+              {{ d?.material }}
+            </td>
+            <td class="border border-secondary text-center">{{ d?.total }}</td>
+            <!-- <td class="border border-secondary text-center">{{ i + 1 }}</td> -->
           </tr>
         </table>
       </div>
