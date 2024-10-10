@@ -10,7 +10,7 @@ const transaction = ref({} as any);
 const urlParams = new URLSearchParams(window.location.search);
 const materials = ref([] as any[]);
 const partners = ref([] as any[]);
-
+const imageToUpload = ref(null as string | null);
 console.log(urlParams.get("type"));
 
 if (urlParams.get("type") === "sales") {
@@ -18,7 +18,7 @@ if (urlParams.get("type") === "sales") {
 } else if (urlParams.get("type") === "purchase") {
   transaction.value.type = 0;
 }
-
+const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 const handleSave = async () => {
   try {
     await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/transactions`, {
@@ -27,7 +27,29 @@ const handleSave = async () => {
       body: JSON.stringify(transaction.value),
     });
 
-    router.push("/transaction");
+    // Save photo if exists
+    if (imageToUpload.value) {
+      await fetch(
+        `${import.meta.env.VITE_APP_BASE_URL}/api/transactions/${
+          transaction.value?.id
+        }/photo`,
+        {
+          method: "post",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            image: imageToUpload.value.split("base64,")?.[1],
+          }),
+        }
+      );
+    }
+
+    if (transaction.value.type === 1) {
+      router.push("/sales");
+    }
+
+    if (transaction.value.type === 0) {
+      router.push("/purchase");
+    }
   } catch (e) {
     console.error(e);
   }
@@ -63,6 +85,28 @@ const init = () => {
   handleFetchPartners();
 };
 const windowx = window;
+
+const handleFileInput = async (e: any) => {
+  const file = (e.target as HTMLInputElement).files?.[0];
+  // const file = ()
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = (e) => {
+      // window.alert(e.target?.result);
+      if (e.target?.result) {
+        imageToUpload.value = e.target?.result as string;
+      }
+    };
+
+    reader.onerror = (e) => {
+      console.error(e);
+    };
+  }
+};
 
 init();
 </script>
@@ -215,6 +259,24 @@ init();
           </td>
         </tr>
       </table>
+    </div>
+
+    <div>
+      <strong>Photo </strong>
+    </div>
+
+    <div v-if="transaction?.id">
+      <input type="file" @input="handleFileInput" />
+
+      <div><strong>Current image:</strong></div>
+      <img
+        :src="`${baseUrl}/api/transactions/${transaction?.id}/photo`"
+        style="width: 300"
+      />
+    </div>
+
+    <div v-if="imageToUpload">
+      <img :src="`${imageToUpload}`" style="width: 300" />
     </div>
   </div>
 </template>

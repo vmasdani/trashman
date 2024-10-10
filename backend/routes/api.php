@@ -16,6 +16,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,6 +128,45 @@ Route::post('/transactions', function (Request $r) {
         $ti = TransactionItem::query()->updateOrCreate(['id' => isset($i?->id) ? $i?->id : null], (array) $i);
     }
 });
+
+Route::get('/transactions/{id}/photo', function ($id, Request $r) {
+    // Define the file path, assuming the file is stored in 'storage/app/public/photos'
+    $filePath = storage_path() . '/app/transaction_' . $id;
+
+    // Check if the file exists
+    if (!file_exists($filePath)) {
+        return response()->json(['error' => 'File not found: ' . $filePath], 404);
+    }
+
+    // Return the image file as a response
+    return response()->file($filePath);
+});
+
+Route::post('/transactions/{id}/photo', function ($id, Request $r) {
+    // Decode the JSON content from the request body
+    $body = json_decode($r->getContent());
+
+    // Check if the image key exists and is a base64 string
+    if (isset($body->image)) {
+        // Get the base64 string from the image
+        $imageData = $body->image;
+
+        // Decode the base64 string to binary data
+        $imageData = base64_decode($imageData);
+
+        // Define the file path and name, using the transaction id as the filename
+        $fileName = 'transaction_' . $id;
+        $filePath =  $fileName; // Store in storage/app/public/photos
+
+        // Save the decoded image data to the storage path
+        Storage::put($filePath, $imageData);
+
+        return response()->json(['message' => 'Photo saved successfully', 'path' => $filePath], 200);
+    } else {
+        return response()->json(['error' => 'Invalid data'], 400);
+    }
+});
+
 
 
 Route::get('/provinsis', function (Request $r) {

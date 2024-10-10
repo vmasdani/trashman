@@ -73,7 +73,7 @@ elif app == "app":
         steps = [
             ("yarn build", "./frontend"),
             ("cp -r frontend/dist/* ./backend/public", "./"),
-            ("zip -r release.zip . -x ./storage/item*", "./backend"),
+            ("zip -r release.zip . -x ./storage/item* ./storage/app ", "./backend"),
             ("mv release.zip ..", "./backend"),
         ]
 else:

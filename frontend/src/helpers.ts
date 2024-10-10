@@ -29,4 +29,6 @@ export const genders = [
 export const roles = [
   { value: 0, label: "Admin" },
   { value: 1, label: "Operator" },
+  { value: 2, label: "Superadmin" },
+  
 ];
